@@ -23,6 +23,7 @@ public class Measure {
     private double temp;
     private double humidity;
     private double radiation;
+    
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     private String mac;

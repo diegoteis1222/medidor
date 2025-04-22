@@ -16,7 +16,7 @@ import com.cebem.medidor.utils.Utils;
 import lombok.AllArgsConstructor;
 
 @RestController
-@AllArgsConstructor 
+@AllArgsConstructor
 public class PruebaController {
 
     // http://localhost:8080/saluda
@@ -66,5 +66,11 @@ public class PruebaController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveSensorData(@RequestBody Measure sensorData) {
         sensorDataRepository.save(sensorData);
+    }
+
+    // Obtener todas las mediciones que se han guardado en la BD
+    @GetMapping("/getAllMeasures")
+    public Iterable<Measure> getAllMeasures() {
+        return sensorDataRepository.findAll();
     }
 }
