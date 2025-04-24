@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +69,6 @@ public class PruebaController {
     private final MeasureRepository sensorDataRepository;
     private final FilmsRepository filmsRepository;
 
-
     @PostMapping("/saveMeasure")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveSensorData(@RequestBody Measure sensorData) {
@@ -92,4 +92,27 @@ public class PruebaController {
     public Films createFilm(@RequestBody Films film) {
         return filmsRepository.save(film);
     }
+
+    @GetMapping("/getAllfilms")
+    public ResponseEntity<List<Films>> getAllFilms() {
+        List<Films> films = filmsRepository.findAll();
+        return ResponseEntity.ok(films);
+    }
+
+    @DeleteMapping("/films/{id}")
+    public ResponseEntity<String> deleteFilm(@PathVariable Long id) {
+        if (filmsRepository.existsById(id)) { // Verifica si la película existe
+            filmsRepository.deleteById(id); // Elimina la película por ID
+            return ResponseEntity.ok("Película eliminada con éxito.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Película no encontrada.");
+        }
+    }
+
+    @GetMapping("/top-rated-films")
+    public ResponseEntity<List<Films>> getTopRatedFilms() {
+        List<Films> topRatedFilms = filmsRepository.findTop10ByOrderByRatingDesc(); // Obtiene las 10 mejores películas
+        return ResponseEntity.ok(topRatedFilms); // Devuelve las películas con un código HTTP 200 (OK)
+    }
+
 }

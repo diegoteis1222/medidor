@@ -16,4 +16,7 @@ public interface FilmsRepository extends JpaRepository<Films, Long> {
     List<Films> findByDirector(String director);
 
     List<Films> findByGenre(String genre); 
+
+    // Método para obtener las 10 películas mejor valoradas
+    List<Films> findTop10ByOrderByRatingDesc();
 }
