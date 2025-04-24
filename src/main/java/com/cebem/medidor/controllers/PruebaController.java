@@ -1,6 +1,9 @@
 package com.cebem.medidor.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cebem.medidor.models.Films;
 import com.cebem.medidor.models.Measure;
+import com.cebem.medidor.repositories.FilmsRepository;
 import com.cebem.medidor.repositories.MeasureRepository;
 import com.cebem.medidor.utils.Utils;
 
@@ -59,8 +64,10 @@ public class PruebaController {
         return "hola";
     }
 
-    // Inyeccion de dependencia
+    // Inyeccion de dependencias
     private final MeasureRepository sensorDataRepository;
+    private final FilmsRepository filmsRepository;
+
 
     @PostMapping("/saveMeasure")
     @ResponseStatus(HttpStatus.CREATED)
@@ -72,5 +79,17 @@ public class PruebaController {
     @GetMapping("/getAllMeasures")
     public Iterable<Measure> getAllMeasures() {
         return sensorDataRepository.findAll();
+    }
+
+    // otra forma de hacerlo pero mas fea
+    @GetMapping("/getMeasures")
+    public ResponseEntity<List<Measure>> getAllSensorData() {
+        List<Measure> sensorData = sensorDataRepository.findAll();
+        return ResponseEntity.ok(sensorData);
+    }
+
+    @PostMapping("/films")
+    public Films createFilm(@RequestBody Films film) {
+        return filmsRepository.save(film);
     }
 }
