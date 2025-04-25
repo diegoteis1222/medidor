@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.cebem.medidor.models.Films;
 import com.cebem.medidor.models.Measure;
+import com.cebem.medidor.models.RickandmortyCharacter;
 import com.cebem.medidor.repositories.FilmsRepository;
 import com.cebem.medidor.repositories.MeasureRepository;
+import com.cebem.medidor.services.RickandmortyService;
 import com.cebem.medidor.utils.Utils;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +27,11 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 public class PruebaController {
+
+    // Inyeccion de dependencias
+    private final MeasureRepository sensorDataRepository;
+    private final FilmsRepository filmsRepository;
+    private final RickandmortyService rickandmortyService;
 
     // http://localhost:8080/saluda
     @GetMapping("/saluda")
@@ -64,10 +72,6 @@ public class PruebaController {
         System.out.println("body" + user + passwd);
         return "hola";
     }
-
-    // Inyeccion de dependencias
-    private final MeasureRepository sensorDataRepository;
-    private final FilmsRepository filmsRepository;
 
     @PostMapping("/saveMeasure")
     @ResponseStatus(HttpStatus.CREATED)
@@ -115,4 +119,8 @@ public class PruebaController {
         return ResponseEntity.ok(topRatedFilms); // Devuelve las películas con un código HTTP 200 (OK)
     }
 
+    @GetMapping("rickandmorty/random")
+    public RickandmortyCharacter getRandomRickandmorty() {
+        return rickandmortyService.getCharacterRandom();
+    }
 }
