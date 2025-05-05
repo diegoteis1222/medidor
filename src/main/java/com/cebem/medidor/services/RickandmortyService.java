@@ -5,18 +5,19 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cebem.medidor.models.RickandmortyCharacter;
 
+
 @Service
 public class RickandmortyService {
-
-    //Inyeccion de dependencias
+    
     private final RestTemplate restTemplate;
 
-    public RickandmortyService() {
-        this.restTemplate = new RestTemplate();
+    public RickandmortyService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-    public RickandmortyCharacter getCharacterRandom() {
-        String url = "https://rickandmortyapi.com/api/character/" + (int) (Math.random() * 826 + 1);
+    public RickandmortyCharacter getCharacterRandom(){
+        String url = "https://rickandmortyapi.com/api/character/" + (int) (Math.random() * 826 + 1); // Hay 826 personajes en la API
         return restTemplate.getForObject(url, RickandmortyCharacter.class);
     }
+
 }
