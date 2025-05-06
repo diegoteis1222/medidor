@@ -1,5 +1,7 @@
 package com.cebem.medidor.controllers;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +23,24 @@ public class PokemonViewController {
         PokeApiResponse pokeApiResponse = pokemonService.getPokemonRandom();
 
         String nombre = capitalize(pokeApiResponse.getName());
-        String tipo = pokeApiResponse.getTypes().get(0).getType().getName();
+
+        // Obtener todos los tipos y unirlos por coma
+        String tipos = pokeApiResponse.getTypes().stream()
+                .map(typeSlot -> typeSlot.getType().getName())
+                .collect(Collectors.joining(", "));
+
         String imagen = pokeApiResponse.getSprites().getFront_default();
 
         model.addAttribute("nombre", nombre);
-        model.addAttribute("tipo", tipo);
+        model.addAttribute("tipo", tipos); // <-- cambia de "tipo" a "tipos"
         model.addAttribute("imagen", imagen);
 
         return "pokemon";
     }
+
     // pa conectar: http://localhost:8080/pokemon
 
     private String capitalize(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }
-
