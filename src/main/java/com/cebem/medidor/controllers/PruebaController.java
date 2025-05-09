@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cebem.medidor.models.Films;
 import com.cebem.medidor.models.Measure;
-import com.cebem.medidor.models.Pokemon;
 import com.cebem.medidor.models.RickandmortyCharacter;
+import com.cebem.medidor.models.Superhero;
 import com.cebem.medidor.repositories.FilmsRepository;
 import com.cebem.medidor.repositories.MeasureRepository;
 import com.cebem.medidor.repositories.PokeApiResponse;
 import com.cebem.medidor.services.PokemonService;
 import com.cebem.medidor.services.RickandmortyService;
+import com.cebem.medidor.services.SuperheroService;
 import com.cebem.medidor.utils.Utils;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ public class PruebaController {
     private final MeasureRepository sensorDataRepository;
     private final FilmsRepository filmsRepository;
     private final RickandmortyService rickandmortyService;
+    private final SuperheroService superheroService;
 
     // http://localhost:8080/saluda
     @GetMapping("/saluda")
@@ -141,6 +143,12 @@ public class PruebaController {
         public PokeApiResponse getPokemonAleatorio() {
             return pokemonService.getPokemonRandom();
         }
+    }
+
+    // Endpoint para obtener un superhéroe aleatorio
+    @GetMapping("/superhero/random")
+    public Superhero getSuperhero() {
+        return superheroService.getSuperhero();  // Obtiene un superhéroe aleatorio
     }
 
 }
