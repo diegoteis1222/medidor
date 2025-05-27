@@ -3,31 +3,28 @@ package com.cebem.medidor.models;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Document(collection = "misiones")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Mision {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;  // Mongo usa String para el _id
 
     private String nombre;
     private String descripcion;
     private String dificultad; // baja, media, alta
     private int recompensa;
 
-    @ManyToMany
-    private List<Robot> robotsParticipantes;
+
+    private List<String> robotsParticipantes;
 
     private LocalDate fechaInicio;
     private LocalDate fechaFin;

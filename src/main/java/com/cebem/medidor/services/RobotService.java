@@ -23,7 +23,7 @@ public class RobotService {
         return robotRepository.findAll();
     }
 
-    public void recargar(Long id) {
+    public void recargar(String id) {
         Optional<Robot> optional = robotRepository.findById(id);
         if (optional.isPresent()) {
             Robot robot = optional.get();
@@ -32,7 +32,7 @@ public class RobotService {
         }
     }
 
-    public void subirNivel(Long id) {
+    public void subirNivel(String id) {
         Optional<Robot> optional = robotRepository.findById(id);
         if (optional.isPresent()) {
             Robot robot = optional.get();
@@ -41,4 +41,3 @@ public class RobotService {
         }
     }
 }
-

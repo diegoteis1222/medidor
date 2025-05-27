@@ -1,32 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Lista de Robots</title></head>
-<body>
-    <h1>Robots</h1>
+  <head>
+    <title>Lista de Robots</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+      }
+      th {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Robots disponibles</h1>
+
     <table>
+      <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Modelo</th>
-            <th>Tipo</th>
-            <th>Energía</th>
-            <th>Nivel</th>
-            <th>Acciones</th>
+          <th>Nombre</th>
+          <th>Modelo</th>
+          <th>Tipo</th>
+          <th>Energía Actual</th>
+          <th>Energía Máxima</th>
+          <th>Nivel</th>
+          <th>Habilidades</th>
+          <th>Estado</th>
         </tr>
+      </thead>
+      <tbody>
         <tr th:each="robot : ${robots}">
-            <td th:text="${robot.nombre}"></td>
-            <td th:text="${robot.modelo}"></td>
-            <td th:text="${robot.tipo}"></td>
-            <td th:text="${robot.energiaActual} + '/' + ${robot.energiaMaxima}"></td>
-            <td th:text="${robot.nivel}"></td>
-            <td>
-                <form th:action="@{'/robots/' + ${robot.id} + '/recargar'}" method="post">
-                    <button>Recargar</button>
-                </form>
-                <form th:action="@{'/robots/' + ${robot.id} + '/subir-nivel'}" method="post">
-                    <button>Subir Nivel</button>
-                </form>
-            </td>
+          <td th:text="${robot.nombre}">Nombre</td>
+          <td th:text="${robot.modelo}">Modelo</td>
+          <td th:text="${robot.tipo}">Tipo</td>
+          <td th:text="${robot.energiaActual}">Energía Actual</td>
+          <td th:text="${robot.energiaMaxima}">Energía Máxima</td>
+          <td th:text="${robot.nivel}">Nivel</td>
+          <td>
+            <ul>
+              <li
+                th:each="habilidad : ${robot.habilidades}"
+                th:text="${habilidad}"
+              >
+                Habilidad
+              </li>
+            </ul>
+          </td>
+          <td th:text="${robot.estado}">Estado</td>
+          <td>
+            <form
+              th:action="@{'/robots/' + ${robot.id} + '/recargar'}"
+              method="post"
+            >
+              <button>Recargar</button>
+            </form>
+            <form
+              th:action="@{'/robots/' + ${robot.id} + '/subir-nivel'}"
+              method="post"
+            >
+              <button>Subir Nivel</button>
+            </form>
+          </td>
         </tr>
+      </tbody>
     </table>
-</body>
+  </body>
 </html>

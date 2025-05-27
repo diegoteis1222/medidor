@@ -2,24 +2,22 @@ package com.cebem.medidor.models;
 
 import java.util.List;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Document(collection = "robots")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Robot {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;  // MongoDB usa String para _id
 
     private String nombre;
     private String modelo;
@@ -28,11 +26,10 @@ public class Robot {
     private int energiaMaxima;
     private int nivel;
 
-    @ElementCollection
-    private List<String> habilidades;
+    private List<String> habilidades;  // MongoDB guarda listas nativamente
 
     private String estado; // activo, dañado, destruido
 
-    @ManyToMany(mappedBy = "robotsParticipantes")
-    private List<Mision> misionesRealizadas;
+    @DBRef
+    private List<Mision> misionesRealizadas;  // referencia a misiones
 }

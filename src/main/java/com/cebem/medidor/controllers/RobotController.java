@@ -3,10 +3,8 @@ package com.cebem.medidor.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,15 +33,14 @@ public class RobotController {
     }
 
     @PostMapping("/{id}/recargar")
-    public String recargar(@PathVariable Long id) {
+    public String recargar(@PathVariable String id) {
         robotService.recargar(id);
         return "redirect:/robots";
     }
 
     @PostMapping("/{id}/subir-nivel")
-    public String subirNivel(@PathVariable Long id) {
+    public String subirNivel(@PathVariable String id) {
         robotService.subirNivel(id);
         return "redirect:/robots";
     }
-
 }

@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Lista de Misiones</title>
-</head>
-<body>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+      }
+      th {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+  <body>
     <h1>Misiones actuales</h1>
+
     <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Dificultad</th>
-                <th>Recompensa</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Resultado</th>
-                <th>Robots Participantes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="mision : ${misiones}">
-                <td th:text="${mision.nombre}"></td>
-                <td th:text="${mision.descripcion}"></td>
-                <td th:text="${mision.dificultad}"></td>
-                <td th:text="${mision.recompensa}"></td>
-                <td th:text="${mision.fechaInicio}"></td>
-                <td th:text="${mision.fechaFin}"></td>
-                <td th:text="${mision.resultado}"></td>
-                <td>
-                    <ul>
-                        <li th:each="robot : ${mision.robotsParticipantes}" th:text="${robot.nombre}"></li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Dificultad</th>
+          <th>Recompensa</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Resultado</th>
+          <th>Robots Participantes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="mision : ${misiones}">
+          <td th:text="${mision.nombre}">Nombre</td>
+          <td th:text="${mision.descripcion}">Descripción</td>
+          <td th:text="${mision.dificultad}">Dificultad</td>
+          <td th:text="${mision.recompensa}">Recompensa</td>
+          <td
+            th:text="${mision.fechaInicio != null} ? ${#temporals.format(mision.fechaInicio, 'dd/MM/yyyy')} : 'No definida'"
+          ></td>
+          <td
+            th:text="${mision.fechaFin != null} ? ${#temporals.format(mision.fechaFin, 'dd/MM/yyyy')} : 'No definida'"
+          ></td>
+          <td th:text="${mision.resultado}">Resultado</td>
+          <td>
+            <ul>
+<li th:each="robotId : ${mision.robotsParticipantes}" th:text="${robotId}"></li></li>
+              <li th:if="${#lists.isEmpty(mision.robotsParticipantes)}">
+                Sin robots asignados
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
     </table>
-</body>
+  </body>
 </html>
