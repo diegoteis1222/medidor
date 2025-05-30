@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado</title>
+</head>
+<body>
+    <h1 th:text="${movie.Title}">Título</h1>
+    <p><strong>Año:</strong> <span th:text="${movie.Year}"></span></p>
+    <p><strong>Director:</strong> <span th:text="${movie.Director}"></span></p>
+    <p><strong>Género:</strong> <span th:text="${movie.Genre}"></span></p>
+    <p><strong>Duración:</strong> <span th:text="${movie.Runtime}"></span></p>
+    <p><strong>Sinopsis:</strong> <span th:text="${movie.Plot}"></span></p>
+    <img th:src="${movie.Poster}" alt="Poster" style="max-height: 400px;">
+    <br><br>
+    <a href="/">Volver</a>
+</body>
+</html>
